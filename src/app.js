@@ -1,52 +1,73 @@
 import $ from 'jquery';
 import Rx from 'rxjs/Rx';
 
-console.log('RxJS Boiler Running...');
+/*
+const numbers = [33, 44, 55, 66, 77];
 
-const btn = $('#btn');
-const input = $('#input');
-const output = $('#output');
+const numbers$ = Rx.Observable.from(numbers);
 
-const btnStream$ = Rx.Observable.fromEvent(btn, 'click');
-
-btnStream$.subscribe(
-    function (e) {
-        console.log(e.target.innerHTML);
+numbers$.subscribe(
+    v => {
+        console.log(v);
     },
-    function (err) {
+    err => {
         console.log(err);
     },
-    function () {
-        console.log('Completed');
+    complete => {
+        console.log('Completed')
     }
 )
 
-const inputStream$ = Rx.Observable.fromEvent(input, 'keyup');
+const posts = [
+    {title: 'Post One', body: 'This is the body'},
+    {title: 'Post Two', body: 'This is the body'},
+    {title: 'Post Three', body: 'This is the body'}
+]
 
-inputStream$.subscribe(
-    function (e) {
-        console.log(e.target.value);
-        output.append(e.target.value);
+const posts$ = Rx.Observable.from(posts);
+
+posts$.subscribe(
+    post => {
+        console.log(post);
+        $('#posts').append(`<li><h3>${post.title}</h3><p>${post.body}</p></li>`);
     },
-    function (err) {
+    err => {
         console.log(err);
     },
-    function () {
-        console.log('Completed');
+    complete => {
+        console.log('Completed')
     }
 )
 
-const moveStream$ = Rx.Observable.fromEvent(document, 'mousemove');
 
-moveStream$.subscribe(
-    function (e) {
-        console.log(e.target.value);
-        output.html(`<h1>X: ${e.clientX} Y: ${e.clientY}</h1>`);
+const set = new Set(['Hello', 44, {title: 'My title'}]);
+
+const set$ = Rx.Observable.from(set);
+
+set$.subscribe(
+    v => {
+        console.log(v);
     },
-    function (err) {
+    err => {
         console.log(err);
     },
-    function () {
-        console.log('Completed');
+    complete => {
+        console.log('Completed')
+    }
+)*/
+
+const map = new Map([[1, 2],[3, 4],[5, 6]]);
+
+const map$ = Rx.Observable.from(map);
+
+map$.subscribe(
+    v => {
+        console.log(v);
+    },
+    err => {
+        console.log(err);
+    },
+    complete => {
+        console.log('Completed')
     }
 )

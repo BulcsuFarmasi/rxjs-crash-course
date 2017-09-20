@@ -56,41 +56,70 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	console.log('RxJS Boiler Running...');
+	/*
+	const numbers = [33, 44, 55, 66, 77];
 
-	var btn = (0, _jquery2.default)('#btn');
-	var input = (0, _jquery2.default)('#input');
-	var output = (0, _jquery2.default)('#output');
+	const numbers$ = Rx.Observable.from(numbers);
 
-	var btnStream$ = _Rx2.default.Observable.fromEvent(btn, 'click');
+	numbers$.subscribe(
+	    v => {
+	        console.log(v);
+	    },
+	    err => {
+	        console.log(err);
+	    },
+	    complete => {
+	        console.log('Completed')
+	    }
+	)
 
-	btnStream$.subscribe(function (e) {
-	    console.log(e.target.innerHTML);
+	const posts = [
+	    {title: 'Post One', body: 'This is the body'},
+	    {title: 'Post Two', body: 'This is the body'},
+	    {title: 'Post Three', body: 'This is the body'}
+	]
+
+	const posts$ = Rx.Observable.from(posts);
+
+	posts$.subscribe(
+	    post => {
+	        console.log(post);
+	        $('#posts').append(`<li><h3>${post.title}</h3><p>${post.body}</p></li>`);
+	    },
+	    err => {
+	        console.log(err);
+	    },
+	    complete => {
+	        console.log('Completed')
+	    }
+	)
+
+
+	const set = new Set(['Hello', 44, {title: 'My title'}]);
+
+	const set$ = Rx.Observable.from(set);
+
+	set$.subscribe(
+	    v => {
+	        console.log(v);
+	    },
+	    err => {
+	        console.log(err);
+	    },
+	    complete => {
+	        console.log('Completed')
+	    }
+	)*/
+
+	var map = new Map([[1, 2], [3, 4], [5, 6]]);
+
+	var map$ = _Rx2.default.Observable.from(map);
+
+	map$.subscribe(function (v) {
+	    console.log(v);
 	}, function (err) {
 	    console.log(err);
-	}, function () {
-	    console.log('Completed');
-	});
-
-	var inputStream$ = _Rx2.default.Observable.fromEvent(input, 'keyup');
-
-	inputStream$.subscribe(function (e) {
-	    console.log(e.target.value);
-	    output.append(e.target.value);
-	}, function (err) {
-	    console.log(err);
-	}, function () {
-	    console.log('Completed');
-	});
-
-	var moveStream$ = _Rx2.default.Observable.fromEvent(document, 'mousemove');
-
-	moveStream$.subscribe(function (e) {
-	    console.log(e.target.value);
-	    output.html('<h1>X: ' + e.clientX + ' Y: ' + e.clientY + '</h1>');
-	}, function (err) {
-	    console.log(err);
-	}, function () {
+	}, function (complete) {
 	    console.log('Completed');
 	});
 
