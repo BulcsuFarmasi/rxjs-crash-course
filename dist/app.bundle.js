@@ -57,44 +57,32 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	/*
-	const source$ = Rx.Observable.interval(100)
-	    .take(5);
+	const source$ = Rx.Observable.interval(1000)
+	                .take(10)
+	                .map(v => v * 2);
 
-	source$.subscribe(
-	    x => {
-	        console.log(x)
-	    },
-	    err => {
-	        console.log(err)
-	    },
-	    complete => {
-	        console.log('Completed');
-	    }
-	);
+	source$.subscribe(v => { console.log(v) });
 
-	 const source$ = Rx.Observable.timer(5000, 2000)
-	 .take(5);
 
-	 source$.subscribe(
-	     x => {
-	        console.log(x)
-	     },
-	     err => {
-	        console.log(err)
-	     },
-	     complete => {
-	        console.log('Completed');
-	     }
-	 );*/
+	const source$ = Rx.Observable.from(['John', 'Tom', 'Shawn'])
+	    .map(v => v.toUpperCase())
+	    .map(v => `I am ${v}`);
 
-	var source$ = _Rx2.default.Observable.range(25, 100);
+	source$.subscribe(v => { console.log(v) });
 
-	source$.subscribe(function (x) {
-	    console.log(x);
-	}, function (err) {
-	    console.log(err);
-	}, function (complete) {
-	    console.log('Completed');
+	    */
+
+	function getUser(username) {
+	    return _jquery2.default.ajax({
+	        url: 'https://api.github.com/users/' + username,
+	        dataType: 'jsonp'
+	    }).promise();
+	}
+
+	_Rx2.default.Observable.fromPromise(getUser('Wulip')).map(function (user) {
+	    return user.data;
+	}).subscribe(function (user) {
+	    console.log(user);
 	});
 
 /***/ }),
