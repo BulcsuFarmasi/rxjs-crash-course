@@ -15,7 +15,7 @@ const source$ = Rx.Observable.from(['John', 'Tom', 'Shawn'])
 
 source$.subscribe(v => { console.log(v) });
 
-    */
+
 
 function getUser (username) {
     return $.ajax({
@@ -25,7 +25,20 @@ function getUser (username) {
 }
 
 Rx.Observable.fromPromise(getUser('Wulip'))
-    .map(user => user.data.na,e)
+    .map(user => user.data.name)
     .subscribe(name => {
         console.log(name);
 });
+
+    */
+
+const users =  [
+    {name: 'Will', age: 34},
+    {name: 'Mike', age: 33},
+    {name: 'Paul', age: 35}
+]
+
+const users$ = Rx.Observable.from(users)
+    .pluck('age');
+
+users$.subscribe(x => { console.log(x) })

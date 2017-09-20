@@ -70,19 +70,29 @@
 
 	source$.subscribe(v => { console.log(v) });
 
-	    */
 
-	function getUser(username) {
-	    return _jquery2.default.ajax({
-	        url: 'https://api.github.com/users/' + username,
+
+	function getUser (username) {
+	    return $.ajax({
+	        url: `https://api.github.com/users/${username}`,
 	        dataType: 'jsonp'
 	    }).promise();
 	}
 
-	_Rx2.default.Observable.fromPromise(getUser('Wulip')).map(function (user) {
-	    return user.data;
-	}).subscribe(function (user) {
-	    console.log(user);
+	Rx.Observable.fromPromise(getUser('Wulip'))
+	    .map(user => user.data.name)
+	    .subscribe(name => {
+	        console.log(name);
+	});
+
+	    */
+
+	var users = [{ name: 'Will', age: 34 }, { name: 'Mike', age: 33 }, { name: 'Paul', age: 35 }];
+
+	var users$ = _Rx2.default.Observable.from(users).pluck('age');
+
+	users$.subscribe(function (x) {
+	    console.log(x);
 	});
 
 /***/ }),
