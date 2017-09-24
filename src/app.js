@@ -1,27 +1,44 @@
 import $ from 'jquery';
 import Rx from 'rxjs/Rx';
 
-/*Rx.Observable.of('Hello')
-    .merge(Rx.Observable.of('Everyone'))
-    .subscribe(x => {console.log(x)});
+/*
+Rx.Observable.of('Hello')
+    .subscribe(v => {
+        Rx.Observable.of(`${v} Everyone`)
+            .subscribe(v => {console.log(v)});
+    })
 
-Rx.Observable.interval(2000)
-    .merge(Rx.Observable.interval(500))
-    .take(25)
-    .subscribe(x =>  {console.log(x)});
-
-
-const source1$ = Rx.Observable.interval(2000).map(v => `Merge1: ${v}`);
-const source2$ = Rx.Observable.interval(500).map(v => `Merge2: ${v}`);
-
-Rx.Observable.merge(source1$, source2$)
-    .take(25)
-    .subscribe(x => {console.log(x)});
+Rx.Observable.of('Hello')
+    .mergeMap(v => Rx.Observable.of(`${v} Everyone`))
+    .subscribe(v => {console.log(v)});
 
 */
 
-const source1$ = Rx.Observable.range(0, 5).map(v => `Source 1: ${v}`);
-const source2$ = Rx.Observable.range(6, 5).map(v => `Source 2: ${v}`);
+function getUser (username) {
+    return $.ajax({
+        url: `https://api.github.com/users/${username}`,
+        dataType: 'jsonp'
+    }).promise();
+}
+/*
+const inputSource$ = Rx.Observable.fromEvent($('#input'), 'keyup');
 
-Rx.Observable.merge(source1$, source2$)
-    .subscribe(x => {console.log(x)});
+inputSource$.subscribe(e => {
+    Rx.Observable.fromPromise(getUser(e.target.value))
+        .subscribe(x => {
+            $("#name").text(x.data.name);
+            $("#blog").text(x.data.blog);
+            $("#repos").text(`Public Repos: ${x.data.public_repos}`);
+        });
+});
+*/
+
+const inputSource$ = Rx.Observable.fromEvent($('#input'), 'keyup')
+    .map(e => event.target.value)
+    .switchMap(v => Rx.Observable.fromPromise(getUser(v)));
+
+inputSource$.subscribe(x => {
+    $("#name").text(x.data.name);
+    $("#blog").text(x.data.blog);
+    $("#repos").text(`Public Repos: ${x.data.public_repos}`);
+});

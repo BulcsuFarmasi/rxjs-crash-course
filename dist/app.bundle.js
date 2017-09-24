@@ -56,34 +56,34 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/*Rx.Observable.of('Hello')
-	    .merge(Rx.Observable.of('Everyone'))
-	    .subscribe(x => {console.log(x)});
+	/*
+	Rx.Observable.of('Hello')
+	    .subscribe(v => {
+	        Rx.Observable.of(`${v} Everyone`)
+	            .subscribe(v => {console.log(v)});
+	    })
 
-	Rx.Observable.interval(2000)
-	    .merge(Rx.Observable.interval(500))
-	    .take(25)
-	    .subscribe(x =>  {console.log(x)});
-
-
-	const source1$ = Rx.Observable.interval(2000).map(v => `Merge1: ${v}`);
-	const source2$ = Rx.Observable.interval(500).map(v => `Merge2: ${v}`);
-
-	Rx.Observable.merge(source1$, source2$)
-	    .take(25)
-	    .subscribe(x => {console.log(x)});
+	Rx.Observable.of('Hello')
+	    .mergeMap(v => Rx.Observable.of(`${v} Everyone`))
+	    .subscribe(v => {console.log(v)});
 
 	*/
 
-	var source1$ = _Rx2.default.Observable.range(0, 5).map(function (v) {
-	    return 'Source 1: ' + v;
-	});
-	var source2$ = _Rx2.default.Observable.range(6, 5).map(function (v) {
-	    return 'Source 2: ' + v;
-	});
+	function getUser(username) {
+	    return _jquery2.default.ajax({
+	        url: 'https://api.github.com/users/' + username,
+	        dataType: 'jsonp'
+	    }).promise();
+	}
 
-	_Rx2.default.Observable.merge(source1$, source2$).subscribe(function (x) {
-	    console.log(x);
+	var inputSource$ = _Rx2.default.Observable.fromEvent((0, _jquery2.default)('#input'), 'keyup');
+
+	inputSource$.subscribe(function (e) {
+	    _Rx2.default.Observable.fromPromise(getUser(e.target.value)).subscribe(function (x) {
+	        (0, _jquery2.default)("#name").text(x.data.name);
+	        (0, _jquery2.default)("#blog").text(x.data.blog);
+	        (0, _jquery2.default)("#repos").text('Public Repos: ' + x.data.public_repos);
+	    });
 	});
 
 /***/ }),
